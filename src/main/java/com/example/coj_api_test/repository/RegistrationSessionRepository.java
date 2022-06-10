@@ -21,8 +21,8 @@ public interface RegistrationSessionRepository extends JpaRepository<Registratio
 
     @Query(value = "SELECT COUNT(*) FROM registrationsession WHERE createddate LIKE :date",nativeQuery = true)
     Long getTotalUserDaily(@Param("date") String date);
-    @Query(value = "SELECT COUNT(*) FROM registrationsession WHERE kyctype = :type and (createddate BETWEEN :dailystart AND :dailyend)",nativeQuery = true)
-    Long getTotalRevokeUserDaily(@Param("type") String type,@Param("dailystart") String dailystart,@Param("dailyend") String dailyend);
+    @Query(value = "SELECT COUNT(*) FROM registrationsession WHERE kyctype = 'PHYSICAL' and status = 'FAILED' and (createddate BETWEEN :dailystart AND :dailyend)",nativeQuery = true)
+    Long getTotalRevokeUserDaily(@Param("dailystart") String dailystart,@Param("dailyend") String dailyend);
     @Query(value = "SELECT COUNT(revoked) FROM registrationsession WHERE createddate LIKE :date",nativeQuery = true)
     Long getTotalActiveUserDaily(@Param("date") String date);
 
@@ -44,8 +44,8 @@ public interface RegistrationSessionRepository extends JpaRepository<Registratio
 
     @Query(value = "SELECT COUNT(*) FROM registrationsession WHERE createddate >= :startdate and createddate <= :enddate",nativeQuery = true)
     Long getTotalUserMonthly(@Param("startdate") String startdate,@Param("enddate")String enddate);
-    @Query(value = "SELECT COUNT(revoked) FROM registrationsession WHERE kyctype=:type and (createddate BETWEEN :startdate AND :enddate)",nativeQuery = true)
-    Long getTotalRevokeUserMonthly(@Param("type") String type,@Param("startdate") String startdate,@Param("enddate") String enddate);
+    @Query(value = "SELECT COUNT(*) FROM registrationsession WHERE kyctype = 'PHYSICAL' and status = 'FAILED' and (createddate BETWEEN :startdate AND :enddate)",nativeQuery = true)
+    Long getTotalRevokeUserMonthly(@Param("startdate") String startdate,@Param("enddate") String enddate);
     @Query(value = "SELECT COUNT(revoked) FROM registrationsession WHERE createddate >= :startdate and createddate <= :enddate",nativeQuery = true)
     Long getTotalActiveUserMonthly(@Param("startdate") String startdate,@Param("enddate") String enddate);
 

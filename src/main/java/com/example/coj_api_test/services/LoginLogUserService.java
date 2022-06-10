@@ -120,7 +120,7 @@ public class LoginLogUserService {
         int monthdayofmonth = Integer.parseInt(selectmonth)-1;
         int dayofmonth = 30;
         // List of month to show in dashboard
-        for (int i=Integer.parseInt(selectmonth);i<(Integer.parseInt(selectmonth)+monthdiff);i++) {
+        for (int i=Integer.parseInt(selectmonth);i<=(Integer.parseInt(selectmonth)+monthdiff);i++) {
             if(i>12) {
                 int temp = (i-1)%12;
                 monthly.add(totalmonth[temp]);
@@ -135,8 +135,15 @@ public class LoginLogUserService {
                         dayofmonth = 31;
                         break;
                     case 1:
-                        dayofmonth = 30;
-                        break;
+                    {
+                        if(year%4==0){
+                            dayofmonth = 29;
+                            break;
+                        } else {
+                            dayofmonth = 28;
+                        }
+                    }
+
                     case 2:
                         dayofmonth = 31;
                         break;
@@ -169,6 +176,9 @@ public class LoginLogUserService {
                         break;
                 }
                 for (int i = 1; i <= dayofmonth; i += 3) {
+                    if(dayofmonth <=29) {
+
+                    }
                     daily.add(String.valueOf(i) + monthly.get(j));
                     String querystartday = "";
                     if(i==1) {

@@ -32,7 +32,7 @@ public class RegistrationSessionService {
                 registrationSessionRepository.getCountIsNewTypeOfUserDaily("PHYSICAL",dailystart,dailyend),
                 registrationSessionRepository.getCountIsNewTypeOfUserDaily("NDID",dailystart,dailyend),
                 registrationSessionRepository.getCountIsNewTypeOfUserDaily("D.DOPA",dailystart,dailyend),
-                registrationSessionRepository.getTotalRevokeUserDaily("FAILED",dailystart,dailyend)
+                registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend)
 
         ));
     }
@@ -46,7 +46,7 @@ public class RegistrationSessionService {
                 registrationSessionRepository.getCountTypeOfUserDaily("PHYSICAL",dailystart,dailyend),
                 registrationSessionRepository.getCountTypeOfUserDaily("NDID",dailystart,dailyend),
                 registrationSessionRepository.getCountTypeOfUserDaily("D.DOPA",dailystart,dailyend),
-                registrationSessionRepository.getTotalRevokeUserDaily("FAILED",dailystart,dailyend)
+                registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend)
         ));
     }
 
@@ -59,7 +59,7 @@ public class RegistrationSessionService {
                 registrationSessionRepository.getCountTotalTypeOfUserDaily("PHYSICAL",dailystart,dailyend),
                 registrationSessionRepository.getCountTotalTypeOfUserDaily("NDID",dailystart,dailyend),
                 registrationSessionRepository.getCountTotalTypeOfUserDaily("D.DOPA",dailystart,dailyend),
-                registrationSessionRepository.getTotalRevokeUserDaily("FAILED",dailystart,dailyend)
+                registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend)
         ));
     }
 
@@ -74,7 +74,7 @@ public class RegistrationSessionService {
                         registrationSessionRepository.getCountIsNewTypeOfUserMonthly("PHYSICAL",start,end),
                         registrationSessionRepository.getCountIsNewTypeOfUserMonthly("NDID",start,end),
                         registrationSessionRepository.getCountIsNewTypeOfUserMonthly("D.DOPA",start,end),
-                        registrationSessionRepository.getTotalRevokeUserMonthly("FAILED",start,end)
+                        registrationSessionRepository.getTotalRevokeUserMonthly(start,end)
                 )
         );
     }
@@ -89,7 +89,7 @@ public class RegistrationSessionService {
                 registrationSessionRepository.getCountTypeOfUserMonthly("PHYSICAL",start,end),
                 registrationSessionRepository.getCountTypeOfUserMonthly("NDID",start,end),
                 registrationSessionRepository.getCountTypeOfUserMonthly("D.DOPA",start,end),
-                registrationSessionRepository.getTotalRevokeUserMonthly("FAILED",start,end)
+                registrationSessionRepository.getTotalRevokeUserMonthly(start,end)
         ));
     }
 
@@ -103,7 +103,7 @@ public class RegistrationSessionService {
                 registrationSessionRepository.getCountTotalTypeOfUserMonthly("PHYSICAL",start,end),
                 registrationSessionRepository.getCountTotalTypeOfUserMonthly("NDID",start,end),
                 registrationSessionRepository.getCountTotalTypeOfUserMonthly("D.DOPA",start,end),
-                registrationSessionRepository.getTotalRevokeUserMonthly("FAILED",start,end)
+                registrationSessionRepository.getTotalRevokeUserMonthly(start,end)
         ));
     }
 

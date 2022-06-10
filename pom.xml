@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>coj_api_test</artifactId>
-    <version>0.0.13-SNAPSHOT</version>
+    <version>0.0.15-SNAPSHOT</version>
     <name>coj_api_test</name>
     <description>coj_api_test</description>
     <properties>
