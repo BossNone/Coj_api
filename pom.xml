@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>coj_api_test</artifactId>
-    <version>0.0.15-SNAPSHOT</version>
-    <name>coj_api_test</name>
+    <artifactId>coj_dashboard_api</artifactId>
+    <version>0.0.1-UAT</version>
+    <name>coj_dashboard</name>
     <description>coj_api_test</description>
     <properties>
         <java.version>17</java.version>

@@ -30,12 +30,19 @@ public class LoginLogUserController {
     @GetMapping("/daily")
     @ResponseBody
     public List<LoginInfo> getDaily(@RequestParam String date) {
+        if(date == null) {
+            throw new HandlerException(new Throwable());
+        }
         return loginLogUserService.getLoginInfoDaily(date);
     }
 
+    @CrossOrigin(origins = "*",allowedHeaders = "*")
     @GetMapping("/monthly")
     @ResponseBody
     public List<LoginInfo> getMonthly(@RequestParam String startdate,@RequestParam String enddate) {
+        if(startdate == null && enddate == null) {
+            throw new HandlerException(new Throwable());
+        }
         return loginLogUserService.getLoginInfoMonthly(startdate,enddate);
     }
 

@@ -17,6 +17,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class LoginLogUserService {
     public List<LoginLogUser> getAllLoginlog() {return loginLogUserRepository.findAll(); }
 
     public List<LoginInfo> getLoginInfoDaily(String date) {
-        List timedaily = List.of("0:00 น.","2:00 น.","4:00 น.","6:00 น.","8:00 น.","10:00 น.","12:00 น.","14:00 น.","16:00 น.","18:00 น.","20:00 น.","22:00 น.","24:00 น.");
+        List timedaily = List.of("0:00-1:59 น.","2:00-3:59 น.","4:00-5:59 น.","6:00-7:59 น.","8:00-9:59 น.","10:00-11:59 น.","12:00-13:59 น.","14:00-15:59 น.","16:00-17:59 น.","18:00-19:59 น.","20:00-21:59 น.","22:00-23:59 น.");
         List<String> timestamp = new ArrayList<>();
         LocalDateTime localDateTime = LocalDateTime.parse(date+"T00:00:00");
         for(int i=0;i<24;i++) {
@@ -41,60 +42,82 @@ public class LoginLogUserService {
                 timestamp.add(localDateTime.plusHours(i-7).toString());
             }
         }
-        return List.of(
-                new LoginInfo(
-                        List.of(new QrCode(
-                                timedaily,
-                                List.of(loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(0),timestamp.get(1)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(2),timestamp.get(3)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(4),timestamp.get(5)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(6),timestamp.get(7)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(8),timestamp.get(9)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(10),timestamp.get(11)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(12),timestamp.get(13)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(14),timestamp.get(15)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(16),timestamp.get(17)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(18),timestamp.get(19)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(20),timestamp.get(21)),
-                                        loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(22),timestamp.get(23).substring(0,14)+"59:59")
-                                        )
-                        )),
-                        List.of(new User(
-                                timedaily,
-                                List.of(
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(0),timestamp.get(1)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(2),timestamp.get(3)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(4),timestamp.get(5)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(6),timestamp.get(7)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(8),timestamp.get(9)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(10),timestamp.get(11)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(12),timestamp.get(13)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(14),timestamp.get(15)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(16),timestamp.get(17)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(18),timestamp.get(19)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(20),timestamp.get(21)),
-                                        loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(22),timestamp.get(23).substring(0,14)+"59:59")
-                                        )
-                        )),
-                        List.of(new Failed(
-                                timedaily,
-                                List.of(
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(0),timestamp.get(1)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(2),timestamp.get(3)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(4),timestamp.get(5)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(6),timestamp.get(7)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(8),timestamp.get(9)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(10),timestamp.get(11)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(12),timestamp.get(13)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(14),timestamp.get(15)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(16),timestamp.get(17)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(18),timestamp.get(19)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(20),timestamp.get(21)),
-                                        loginLogUserRepository.getfailedCountDaily(timestamp.get(22),timestamp.get(23).substring(0,14)+"59:59")
-                                        )
-                                )
-                        ))
-                );
+        List<LoginInfo> response;
+        try {
+            response = List.of(
+                    new LoginInfo(
+                            List.of(new QrCode(
+                                    timedaily,
+                                    List.of(loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(0),timestamp.get(1).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(2),timestamp.get(3).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(4),timestamp.get(5).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(6),timestamp.get(7).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(8),timestamp.get(9).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(10),timestamp.get(11).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(12),timestamp.get(13).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(14),timestamp.get(15).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(16),timestamp.get(17).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(18),timestamp.get(19).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(20),timestamp.get(21).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("QR_CODE",timestamp.get(22),timestamp.get(23).substring(0,14)+"59:59")
+                                    )
+                            )),
+                            List.of(new User(
+                                    timedaily,
+                                    List.of(
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(0),timestamp.get(1).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(2),timestamp.get(3).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(4),timestamp.get(5).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(6),timestamp.get(7).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(8),timestamp.get(9).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(10),timestamp.get(11).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(12),timestamp.get(13).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(14),timestamp.get(15).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(16),timestamp.get(17).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(18),timestamp.get(19).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(20),timestamp.get(21).substring(0,14)+"59:59"),
+                                            loginLogUserRepository.getloginCountDaily("CREDENTIAL",timestamp.get(22),timestamp.get(23).substring(0,14)+"59:59")
+                                    )
+                            )),
+                            List.of(new Failed(
+                                            timedaily,
+                                            List.of(
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(0),timestamp.get(1).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(2),timestamp.get(3).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(4),timestamp.get(5).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(6),timestamp.get(7).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(8),timestamp.get(9).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(10),timestamp.get(11).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(12),timestamp.get(13).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(14),timestamp.get(15).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(16),timestamp.get(17).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(18),timestamp.get(19).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(20),timestamp.get(21).substring(0,14)+"59:59"),
+                                                    loginLogUserRepository.getfailedCountDaily(timestamp.get(22),timestamp.get(23).substring(0,14)+"59:59")
+                                            )
+                                    )
+                            ))
+            );
+        } catch (Exception e){
+            long num = 0;
+            response = List.of(
+                    new LoginInfo(
+                            List.of(new QrCode(
+                                    timedaily,
+                                    List.of(num,num,num,num,num,num,num,num,num,num,num,num)
+                            )),
+                            List.of(new User(
+                                    timedaily,
+                                    List.of(num,num,num,num,num,num,num,num,num,num,num,num)
+                            )),
+                            List.of(new Failed(
+                                    timedaily,
+                                    List.of(num,num,num,num,num,num,num,num,num,num,num,num)
+                                    )
+                            ))
+            );
+        }
+        return response;
     }
 
     public List<LoginInfo> getLoginInfoMonthly(String startdate,String enddate) {
@@ -129,62 +152,62 @@ public class LoginLogUserService {
             }
 
         }
+        try {
             for (int j=0;j<=monthdiff;j++) {
                 switch (monthdayofmonth) {
-                    case 0:
-                        dayofmonth = 31;
-                        break;
                     case 1:
                     {
-                        if(year%4==0){
-                            dayofmonth = 29;
-                            break;
+                        if(year > 2200) {
+                            if(year % 4 == 3) {
+                                dayofmonth = 29;
+                                break;
+                            } else {
+                                dayofmonth = 28;
+                                break;
+                            }
                         } else {
-                            dayofmonth = 28;
+                            if(year%4==0){
+                                dayofmonth = 29;
+                                break;
+                            } else {
+                                dayofmonth = 28;
+                                break;
+                            }
                         }
                     }
-
+                    case 0:
                     case 2:
-                        dayofmonth = 31;
-                        break;
-                    case 3:
-                        dayofmonth = 30;
-                        break;
                     case 4:
-                        dayofmonth = 31;
-                        break;
-                    case 5:
-                        dayofmonth = 30;
-                        break;
                     case 6:
-                        dayofmonth = 31;
-                        break;
                     case 7:
-                        dayofmonth = 31;
-                        break;
-                    case 8:
-                        dayofmonth = 30;
-                        break;
                     case 9:
-                        dayofmonth = 31;
-                        break;
-                    case 10:
-                        dayofmonth = 30;
-                        break;
                     case 11:
                         dayofmonth = 31;
                         break;
+                    case 3:
+                    case 5:
+                    case 8:
+                    case 10:
+                        dayofmonth = 30;
+                        break;
                 }
                 for (int i = 1; i <= dayofmonth; i += 3) {
-                    if(dayofmonth <=29) {
-
-                    }
                     daily.add(String.valueOf(i) + monthly.get(j));
                     String querystartday = "";
                     if(i==1) {
-                        querystartday = "30T17:00:00";
+                        if(monthdayofmonth == 4 || monthdayofmonth == 6 || monthdayofmonth ==9 || monthdayofmonth == 11) {
+                            querystartday = "30T17:00:00";
+                        } else if (monthdayofmonth == 0 || monthdayofmonth == 1 || monthdayofmonth == 3 || monthdayofmonth == 5 || monthdayofmonth == 7 || monthdayofmonth == 8 || monthdayofmonth == 10) {
+                            querystartday = "31T17:00:00";
+                        } else if(monthdayofmonth == 2) {
+                            if(year%4==0) {
+                                querystartday = "29T17:00:00";
+                            } else {
+                                querystartday = "28T17:00:00";
+                            }
+                        }
                     } else {
-                        querystartday = String.valueOf(i-1);
+                        querystartday = String.valueOf(i);
                         if(querystartday.length() <2) {
                             querystartday = "0" + querystartday + "T17:00:00";
                         }
@@ -202,9 +225,9 @@ public class LoginLogUserService {
                     if (queryendday.length() < 2) {
                         queryendday = "0" + queryendday;
                     }
-                    countqr.add(loginLogUserRepository.getloginCountMonthly("QR_CODE", year + "-" + querymonth + "-" + querystartday, date1.getYear() + "-" + querymonth + "-" + queryendday +"T16:59:59"));
-                    countuser.add(loginLogUserRepository.getloginCountMonthly("CREDENTIAL", year + "-" + querymonth + "-" + querystartday, date1.getYear() + "-" + querymonth + "-" + queryendday +"T16:59:59"));
-                    countfailed.add(loginLogUserRepository.getfailedCountMonthly(year + "-" + querymonth + "-" + querystartday, date1.getYear() + "-" + querymonth + "-" + queryendday+"T16:59:59"));
+                        countqr.add(loginLogUserRepository.getloginCountMonthly("QR_CODE", year + "-" + querymonth + "-" + querystartday, year + "-" + querymonth + "-" + queryendday + "T16:59:59"));
+                        countuser.add(loginLogUserRepository.getloginCountMonthly("CREDENTIAL", year + "-" + querymonth + "-" + querystartday, year + "-" + querymonth + "-" + queryendday + "T16:59:59"));
+                        countfailed.add(loginLogUserRepository.getfailedCountMonthly(year + "-" + querymonth + "-" + querystartday, year + "-" + querymonth + "-" + queryendday + "T16:59:59"));
                 }
                 monthdayofmonth += 1;
                 if(monthdayofmonth>=12) {
@@ -212,6 +235,13 @@ public class LoginLogUserService {
                     year++;
                 }
             }
+        }
+        catch (Exception e) {
+            long longnum = 0;
+            countqr.add(longnum);
+            countuser.add(longnum);
+            countfailed.add(longnum);
+        }
 
         return List.of(
                 new LoginInfo(

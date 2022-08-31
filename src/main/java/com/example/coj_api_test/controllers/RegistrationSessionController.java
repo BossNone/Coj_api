@@ -32,6 +32,9 @@ public class RegistrationSessionController {
     @GetMapping("/total-l-info-daily")
     @ResponseBody
     public List<TotalLInfo> getTotaluserInfoDaily(@RequestParam String date) {
+        if(date == null) {
+            throw new HandlerException(new Throwable());
+        }
         return registrationSessionService.getTotalLInfoDaily(date);
     }
 
@@ -39,6 +42,9 @@ public class RegistrationSessionController {
     @GetMapping("/change-device-info-daily")
     @ResponseBody
     public List<ChangeDeviceInfo> getChangeDeviceInfoDaily(@RequestParam String date) {
+        if(date == null) {
+            throw new HandlerException(new Throwable());
+        }
         return registrationSessionService.getChangeDeviceInfoDaily(date);
     }
 
@@ -46,6 +52,9 @@ public class RegistrationSessionController {
     @GetMapping("/verify-register-info-daily")
     @ResponseBody
     public List<VerifyRegisterInfo> getVerifyRegisterInfoDaily(@RequestParam String date) {
+        if(date == null) {
+            throw new HandlerException(new Throwable());
+        }
         return registrationSessionService.getVerifyRegisterInfoDaily(date);
     }
 
@@ -53,6 +62,9 @@ public class RegistrationSessionController {
     @GetMapping("/total-l-info-monthly")
     @ResponseBody
     public List<TotalLInfo> getTotaluserInfoMonthly(@RequestParam String startdate,@RequestParam String enddate) {
+        if(startdate == null && enddate == null) {
+            throw new HandlerException(new Throwable());
+        }
         return registrationSessionService.getTotalLInfoMonthly(startdate,enddate);
     }
 
@@ -60,6 +72,9 @@ public class RegistrationSessionController {
     @GetMapping("/change-device-info-monthly")
     @ResponseBody
     public List<ChangeDeviceInfo> getChangeDeviceInfoMonthly(@RequestParam String startdate,@RequestParam String enddate) {
+        if(startdate == null && enddate == null) {
+            throw new HandlerException(new Throwable());
+        }
         return registrationSessionService.getChangeDeviceInfoMonthly(startdate,enddate);
     }
 
@@ -67,6 +82,9 @@ public class RegistrationSessionController {
     @GetMapping("/verify-register-info-monthly")
     @ResponseBody
     public List<VerifyRegisterInfo> getVerifyRegisterMonthly(@RequestParam String startdate,@RequestParam String enddate) {
+        if(startdate == null && enddate == null) {
+            throw new HandlerException(new Throwable());
+        }
         return registrationSessionService.getVerifyRegisterInfoMonthly(startdate,enddate);
     }
 
@@ -74,6 +92,9 @@ public class RegistrationSessionController {
     @GetMapping("/createddate")
     @ResponseBody
     public List<List<List<String>>> getVerifyRegisterMonthly(@RequestParam String date) {
+        if(date == null) {
+            throw new HandlerException(new Throwable());
+        }
         return registrationSessionService.getDateTotalUser(date);
     }
 

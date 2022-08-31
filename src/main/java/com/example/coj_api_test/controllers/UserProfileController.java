@@ -29,10 +29,18 @@ public class UserProfileController {
     @CrossOrigin(origins = "*",allowedHeaders = "*")
     @GetMapping("/account-info-daily")
     @ResponseBody
-    public List<AccountInfo> getAccountInfoDaily(@RequestParam String date) {return userProfileService.getAccountInfoDaily(date);}
+    public List<AccountInfo> getAccountInfoDaily(@RequestParam String date) {
+        if(date == null) {
+            throw new HandlerException(new Throwable());
+        }
+        return userProfileService.getAccountInfoDaily(date);}
 
     @CrossOrigin(origins = "*",allowedHeaders = "*")
     @GetMapping("/account-info-monthly")
     @ResponseBody
-    public List<AccountInfo> getAccountInfoMonthly(@RequestParam String startdate,@RequestParam String enddate) {return userProfileService.getAccountInfoMonthly(startdate,enddate);}
+    public List<AccountInfo> getAccountInfoMonthly(@RequestParam String startdate,@RequestParam String enddate) {
+        if(startdate == null && enddate == null) {
+            throw new HandlerException(new Throwable());
+        }
+        return userProfileService.getAccountInfoMonthly(startdate,enddate);}
 }
