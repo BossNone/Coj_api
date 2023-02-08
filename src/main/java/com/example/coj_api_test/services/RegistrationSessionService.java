@@ -28,19 +28,41 @@ public class RegistrationSessionService {
         String dailystart = localDateTime.minusHours(7).toString();
         String dailyend = localDateTime.plusHours(16).plusMinutes(59).plusSeconds(59).toString();
         List<VerifyRegisterInfo> response;
+
+        Long ekyc = 0L;
+        Long physical = 0L;
+        Long ndid = 0L;
+        Long dopa = 0L;
+        Long revoke = 0L;
+
         try {
-            response = List.of(new VerifyRegisterInfo(
-                    registrationSessionRepository.getCountIsNewTypeOfUserDaily("eKYC",dailystart,dailyend),
-                    registrationSessionRepository.getCountIsNewTypeOfUserDaily("PHYSICAL",dailystart,dailyend),
-                    registrationSessionRepository.getCountIsNewTypeOfUserDaily("NDID",dailystart,dailyend),
-                    registrationSessionRepository.getCountIsNewTypeOfUserDaily("D.DOPA",dailystart,dailyend),
-                    registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend)
+            ekyc = registrationSessionRepository.getCountIsNewTypeOfUserDaily("eKYC",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            physical = registrationSessionRepository.getCountIsNewTypeOfUserDaily("PHYSICAL",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            ndid = registrationSessionRepository.getCountIsNewTypeOfUserDaily("NDID",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            dopa = registrationSessionRepository.getCountIsNewTypeOfUserDaily("D.DOPA",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            revoke =  registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend);
+        } catch (Exception e) {}
 
-            ));
-        } catch (Exception e) {
-            response = List.of(new VerifyRegisterInfo(0,0,0,0,0));
-        }
-
+        response = List.of(new VerifyRegisterInfo(ekyc,physical,ndid,dopa,revoke));
+//        try {
+//            response = List.of(new VerifyRegisterInfo(
+//                    registrationSessionRepository.getCountIsNewTypeOfUserDaily("eKYC",dailystart,dailyend),
+//                    registrationSessionRepository.getCountIsNewTypeOfUserDaily("PHYSICAL",dailystart,dailyend),
+//                    registrationSessionRepository.getCountIsNewTypeOfUserDaily("NDID",dailystart,dailyend),
+//                    registrationSessionRepository.getCountIsNewTypeOfUserDaily("D.DOPA",dailystart,dailyend),
+//                    registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend)
+//            ));
+//        } catch (Exception e) {
+//            response = List.of(new VerifyRegisterInfo(0,0,0,0,0));
+//        }
 
         return response;
     }
@@ -50,18 +72,43 @@ public class RegistrationSessionService {
         String dailystart = localDateTime.minusHours(7).toString();
         String dailyend = localDateTime.plusHours(16).plusMinutes(59).plusSeconds(59).toString();
         List<ChangeDeviceInfo> response;
-        try{
-            response = List.of(new ChangeDeviceInfo(
-                    registrationSessionRepository.getCountTypeOfUserDaily("eKYC",dailystart,dailyend),
-                    registrationSessionRepository.getCountTypeOfUserDaily("PHYSICAL",dailystart,dailyend),
-                    registrationSessionRepository.getCountTypeOfUserDaily("NDID",dailystart,dailyend),
-                    registrationSessionRepository.getCountTypeOfUserDaily("D.DOPA",dailystart,dailyend),
-                    registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend)
-            ));
-        } catch (Exception e) {
-            response = List.of(new ChangeDeviceInfo(0,0,0,0,0)
-            );
-        }
+
+        Long ekyc = 0L;
+        Long physical = 0L;
+        Long ndid = 0L;
+        Long dopa = 0L;
+        Long revoke = 0L;
+
+        try {
+            ekyc = registrationSessionRepository.getCountTypeOfUserDaily("eKYC",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            physical = registrationSessionRepository.getCountTypeOfUserDaily("PHYSICAL",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            ndid = registrationSessionRepository.getCountTypeOfUserDaily("NDID",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            dopa = registrationSessionRepository.getCountTypeOfUserDaily("D.DOPA",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            revoke = registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend);
+        } catch (Exception e) {}
+
+        response = List.of(new ChangeDeviceInfo(ekyc,physical,ndid,dopa,revoke));
+
+//        try{
+//            response = List.of(new ChangeDeviceInfo(
+//                    registrationSessionRepository.getCountTypeOfUserDaily("eKYC",dailystart,dailyend),
+//                    registrationSessionRepository.getCountTypeOfUserDaily("PHYSICAL",dailystart,dailyend),
+//                    registrationSessionRepository.getCountTypeOfUserDaily("NDID",dailystart,dailyend),
+//                    registrationSessionRepository.getCountTypeOfUserDaily("D.DOPA",dailystart,dailyend),
+//                    registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend)
+//            ));
+//        } catch (Exception e) {
+//            response = List.of(new ChangeDeviceInfo(0,0,0,0,0)
+//            );
+//        }
         return response;
     }
 
@@ -70,19 +117,44 @@ public class RegistrationSessionService {
         String dailystart = localDateTime.minusHours(7).toString();
         String dailyend = localDateTime.plusHours(16).plusMinutes(59).plusSeconds(59).toString();
         List<TotalLInfo> response;
-        try{
-            response = List.of(new TotalLInfo(
-                    registrationSessionRepository.getCountTotalTypeOfUserDaily("eKYC",dailystart,dailyend),
-                    registrationSessionRepository.getCountTotalTypeOfUserDaily("PHYSICAL",dailystart,dailyend),
-                    registrationSessionRepository.getCountTotalTypeOfUserDaily("NDID",dailystart,dailyend),
-                    registrationSessionRepository.getCountTotalTypeOfUserDaily("D.DOPA",dailystart,dailyend),
-                    registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend)
-            ));
-        } catch (Exception e) {
-            response = List.of(new TotalLInfo(
-                    0,0,0,0,0
-            ));
-        }
+
+        Long ekyc = 0L;
+        Long physical = 0L;
+        Long ndid = 0L;
+        Long dopa = 0L;
+        Long revoke = 0L;
+
+        try {
+            ekyc = registrationSessionRepository.getCountTotalTypeOfUserDaily("eKYC",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            physical = registrationSessionRepository.getCountTotalTypeOfUserDaily("PHYSICAL",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            ndid = registrationSessionRepository.getCountTotalTypeOfUserDaily("NDID",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            dopa = registrationSessionRepository.getCountTotalTypeOfUserDaily("D.DOPA",dailystart,dailyend);
+        } catch (Exception e) {}
+        try {
+            revoke = registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend);
+        } catch (Exception e) {}
+
+        response = List.of(new TotalLInfo(ekyc,physical,ndid,dopa,revoke));
+
+//        try{
+//            response = List.of(new TotalLInfo(
+//                    registrationSessionRepository.getCountTotalTypeOfUserDaily("eKYC",dailystart,dailyend),
+//                    registrationSessionRepository.getCountTotalTypeOfUserDaily("PHYSICAL",dailystart,dailyend),
+//                    registrationSessionRepository.getCountTotalTypeOfUserDaily("NDID",dailystart,dailyend),
+//                    registrationSessionRepository.getCountTotalTypeOfUserDaily("D.DOPA",dailystart,dailyend),
+//                    registrationSessionRepository.getTotalRevokeUserDaily(dailystart,dailyend)
+//            ));
+//        } catch (Exception e) {
+//            response = List.of(new TotalLInfo(
+//                    0,0,0,0,0
+//            ));
+//        }
         return response;
     }
 
@@ -92,23 +164,49 @@ public class RegistrationSessionService {
         String start = startlocalDateTime.minusHours(7).toString();
         String end = endlocalDateTime.plusHours(16).plusMinutes(59).plusSeconds(59).toString();
         List<VerifyRegisterInfo> response;
+
+        Long ekyc = 0L;
+        Long physical = 0L;
+        Long ndid = 0L;
+        Long dopa = 0L;
+        Long revoke = 0L;
+
         try {
-            response = List.of(
-                    new VerifyRegisterInfo(
-                            registrationSessionRepository.getCountIsNewTypeOfUserMonthly("eKYC",start,end),
-                            registrationSessionRepository.getCountIsNewTypeOfUserMonthly("PHYSICAL",start,end),
-                            registrationSessionRepository.getCountIsNewTypeOfUserMonthly("NDID",start,end),
-                            registrationSessionRepository.getCountIsNewTypeOfUserMonthly("D.DOPA",start,end),
-                            registrationSessionRepository.getTotalRevokeUserMonthly(start,end)
-                    )
-            );
-        } catch (Exception e) {
-            response = List.of(
-                    new VerifyRegisterInfo(
-                            0,0,0,0,0
-                    )
-            );
-        }
+            ekyc = registrationSessionRepository.getCountIsNewTypeOfUserMonthly("eKYC",start,end);
+        } catch (Exception e) {}
+        try {
+            physical = registrationSessionRepository.getCountIsNewTypeOfUserMonthly("PHYSICAL",start,end);
+        } catch (Exception e) {}
+        try {
+            ndid = registrationSessionRepository.getCountIsNewTypeOfUserMonthly("NDID",start,end);
+        } catch (Exception e) {}
+        try {
+            dopa = registrationSessionRepository.getCountIsNewTypeOfUserMonthly("D.DOPA",start,end);
+        } catch (Exception e) {}
+        try {
+            revoke = registrationSessionRepository.getTotalRevokeUserMonthly(start,end);
+        } catch (Exception e) {}
+
+        response = List.of(
+                new VerifyRegisterInfo(ekyc,physical,ndid,dopa,revoke));
+
+//        try {
+//            response = List.of(
+//                    new VerifyRegisterInfo(
+//                            registrationSessionRepository.getCountIsNewTypeOfUserMonthly("eKYC",start,end),
+//                            registrationSessionRepository.getCountIsNewTypeOfUserMonthly("PHYSICAL",start,end),
+//                            registrationSessionRepository.getCountIsNewTypeOfUserMonthly("NDID",start,end),
+//                            registrationSessionRepository.getCountIsNewTypeOfUserMonthly("D.DOPA",start,end),
+//                            registrationSessionRepository.getTotalRevokeUserMonthly(start,end)
+//                    )
+//            );
+//        } catch (Exception e) {
+//            response = List.of(
+//                    new VerifyRegisterInfo(
+//                            0,0,0,0,0
+//                    )
+//            );
+//        }
         return response;
     }
 
@@ -118,19 +216,44 @@ public class RegistrationSessionService {
         String start = startlocalDateTime.minusHours(7).toString();
         String end = endlocalDateTime.plusHours(16).plusMinutes(59).plusSeconds(59).toString();
         List<ChangeDeviceInfo> response;
-        try{
-            response = List.of(new ChangeDeviceInfo(
-                    registrationSessionRepository.getCountTypeOfUserMonthly("eKYC",start,end),
-                    registrationSessionRepository.getCountTypeOfUserMonthly("PHYSICAL",start,end),
-                    registrationSessionRepository.getCountTypeOfUserMonthly("NDID",start,end),
-                    registrationSessionRepository.getCountTypeOfUserMonthly("D.DOPA",start,end),
-                    registrationSessionRepository.getTotalRevokeUserMonthly(start,end)
-            ));
-        } catch(Exception e) {
-            response = List.of(new ChangeDeviceInfo(
-                    0,0,0,0,0
-            ));
-        }
+
+        Long ekyc = 0L;
+        Long physical = 0L;
+        Long ndid = 0L;
+        Long dopa = 0L;
+        Long revoke = 0L;
+
+        try {
+            ekyc = registrationSessionRepository.getCountTypeOfUserMonthly("eKYC",start,end);
+        } catch (Exception e) {}
+        try {
+            physical = registrationSessionRepository.getCountTypeOfUserMonthly("PHYSICAL",start,end);
+        } catch (Exception e) {}
+        try {
+            ndid = registrationSessionRepository.getCountTypeOfUserMonthly("NDID",start,end);
+        } catch (Exception e) {}
+        try {
+            dopa = registrationSessionRepository.getCountTypeOfUserMonthly("D.DOPA",start,end);
+        } catch (Exception e) {}
+        try {
+            revoke = registrationSessionRepository.getTotalRevokeUserMonthly(start,end);
+        } catch (Exception e) {}
+
+        response = List.of(new ChangeDeviceInfo(ekyc,physical,ndid,dopa,revoke));
+
+//        try{
+//            response = List.of(new ChangeDeviceInfo(
+//                    registrationSessionRepository.getCountTypeOfUserMonthly("eKYC",start,end),
+//                    registrationSessionRepository.getCountTypeOfUserMonthly("PHYSICAL",start,end),
+//                    registrationSessionRepository.getCountTypeOfUserMonthly("NDID",start,end),
+//                    registrationSessionRepository.getCountTypeOfUserMonthly("D.DOPA",start,end),
+//                    registrationSessionRepository.getTotalRevokeUserMonthly(start,end)
+//            ));
+//        } catch(Exception e) {
+//            response = List.of(new ChangeDeviceInfo(
+//                    0,0,0,0,0
+//            ));
+//        }
         return response;
     }
 
@@ -140,19 +263,44 @@ public class RegistrationSessionService {
         String start = startlocalDateTime.minusHours(7).toString();
         String end = endlocalDateTime.plusHours(16).plusMinutes(59).plusSeconds(59).toString();
         List<TotalLInfo> response;
-        try{
-            response = List.of(new TotalLInfo(
-                    registrationSessionRepository.getCountTotalTypeOfUserMonthly("eKYC",start,end),
-                    registrationSessionRepository.getCountTotalTypeOfUserMonthly("PHYSICAL",start,end),
-                    registrationSessionRepository.getCountTotalTypeOfUserMonthly("NDID",start,end),
-                    registrationSessionRepository.getCountTotalTypeOfUserMonthly("D.DOPA",start,end),
-                    registrationSessionRepository.getTotalRevokeUserMonthly(start,end)
-            ));
-        } catch (Exception e){
-            response = List.of(new TotalLInfo(
-                    0,0,0,0,0
-            ));
-        }
+
+        Long ekyc = 0L;
+        Long physical = 0L;
+        Long ndid = 0L;
+        Long dopa = 0L;
+        Long revoke = 0L;
+
+        try {
+            ekyc = registrationSessionRepository.getCountTotalTypeOfUserMonthly("eKYC",start,end);
+        } catch (Exception e) {}
+        try {
+            physical = registrationSessionRepository.getCountTotalTypeOfUserMonthly("PHYSICAL",start,end);
+        } catch (Exception e) {}
+        try {
+            ndid = registrationSessionRepository.getCountTotalTypeOfUserMonthly("NDID",start,end);
+        } catch (Exception e) {}
+        try {
+            dopa = registrationSessionRepository.getCountTotalTypeOfUserMonthly("D.DOPA",start,end);
+        } catch (Exception e) {}
+        try {
+            revoke = registrationSessionRepository.getTotalRevokeUserMonthly(start,end);
+        } catch (Exception e) {}
+
+        response = List.of(new TotalLInfo(ekyc,physical,ndid,dopa,revoke));
+
+//        try{
+//            response = List.of(new TotalLInfo(
+//                    registrationSessionRepository.getCountTotalTypeOfUserMonthly("eKYC",start,end),
+//                    registrationSessionRepository.getCountTotalTypeOfUserMonthly("PHYSICAL",start,end),
+//                    registrationSessionRepository.getCountTotalTypeOfUserMonthly("NDID",start,end),
+//                    registrationSessionRepository.getCountTotalTypeOfUserMonthly("D.DOPA",start,end),
+//                    registrationSessionRepository.getTotalRevokeUserMonthly(start,end)
+//            ));
+//        } catch (Exception e){
+//            response = List.of(new TotalLInfo(
+//                    0,0,0,0,0
+//            ));
+//        }
         return response;
     }
 

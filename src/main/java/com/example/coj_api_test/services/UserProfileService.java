@@ -27,21 +27,38 @@ public class UserProfileService {
         String dailystart = localDateTime.minusHours(7).toString();
         String dailyend = localDateTime.plusHours(16).plusMinutes(59).plusSeconds(59).toString();
         List<AccountInfo> response;
-        try{
-            response = List.of(
-                    new AccountInfo(
-                            userProfileRepository.getTotalActiveUserDaily(dailystart,dailyend)+userProfileRepository.getTotalInactiveUserDaily(dailystart,dailyend),
-                            userProfileRepository.getTotalActiveUserDaily(dailystart,dailyend),
-                            userProfileRepository.getTotalInactiveUserDaily(dailystart,dailyend)
-                    )
-            );
-        }catch (Exception e){
-            response = List.of(
-                    new AccountInfo(
-                            0,0,0
-                    )
-            );
-        }
+
+        Long active = 0L;
+        Long inactive = 0L;
+
+        try {
+            active = userProfileRepository.getTotalActiveUserDaily(dailystart,dailyend);
+        } catch(Exception e) {}
+
+        try {
+            inactive = userProfileRepository.getTotalInactiveUserDaily(dailystart,dailyend);
+        } catch (Exception e) {}
+
+        response = List.of(
+                new AccountInfo(
+                        active+inactive,active,inactive
+                )
+        );
+//        try{
+//            response = List.of(
+//                    new AccountInfo(
+//                            userProfileRepository.getTotalActiveUserDaily(dailystart,dailyend)+userProfileRepository.getTotalInactiveUserDaily(dailystart,dailyend),
+//                            userProfileRepository.getTotalActiveUserDaily(dailystart,dailyend),
+//                            userProfileRepository.getTotalInactiveUserDaily(dailystart,dailyend)
+//                    )
+//            );
+//        }catch (Exception e){
+//            response = List.of(
+//                    new AccountInfo(
+//                            0,0,0
+//                    )
+//            );
+//        }
         return response;
     }
 
@@ -51,21 +68,38 @@ public class UserProfileService {
         String start = startlocalDateTime.minusHours(7).toString();
         String end = endlocalDateTime.plusHours(16).plusMinutes(59).plusSeconds(59).toString();
         List<AccountInfo> response;
-        try{
-            response = List.of(
-                    new AccountInfo(
-                            userProfileRepository.getTotalActiveUserMonthly(start,end)+userProfileRepository.getTotalInactiveUserMonthly(start,end),
-                            userProfileRepository.getTotalActiveUserMonthly(start,end),
-                            userProfileRepository.getTotalInactiveUserMonthly(start,end)
-                    )
-            );
-        }catch (Exception e){
-            response = List.of(
-                    new AccountInfo(
-                            0,0,0
-                    )
-            );
-        }
+
+        Long active = 0L;
+        Long inactive = 0L;
+
+        try {
+            active = userProfileRepository.getTotalActiveUserMonthly(start,end);
+        } catch(Exception e) {}
+
+        try {
+            inactive = userProfileRepository.getTotalInactiveUserMonthly(start,end);
+        } catch (Exception e) {}
+
+        response = List.of(
+                new AccountInfo(
+                        active+inactive,active,inactive
+                )
+        );
+//        try{
+//            response = List.of(
+//                    new AccountInfo(
+//                            userProfileRepository.getTotalActiveUserMonthly(start,end)+userProfileRepository.getTotalInactiveUserMonthly(start,end),
+//                            userProfileRepository.getTotalActiveUserMonthly(start,end),
+//                            userProfileRepository.getTotalInactiveUserMonthly(start,end)
+//                    )
+//            );
+//        }catch (Exception e){
+//            response = List.of(
+//                    new AccountInfo(
+//                            0,0,0
+//                    )
+//            );
+//        }
         return response;
     }
     public List<UserProfile> getAllUserProfile() {return userProfileRepository.findAll();}

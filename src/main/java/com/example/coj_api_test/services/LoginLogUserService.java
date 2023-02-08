@@ -192,7 +192,9 @@ public class LoginLogUserService {
                         break;
                 }
                 for (int i = 1; i <= dayofmonth; i += 3) {
+                    //Date Label ex. 1 ม.ค.
                     daily.add(String.valueOf(i) + monthly.get(j));
+
                     String querystartday = "";
                     if(i==1) {
                         if(monthdayofmonth == 4 || monthdayofmonth == 6 || monthdayofmonth ==9 || monthdayofmonth == 11) {
@@ -225,9 +227,17 @@ public class LoginLogUserService {
                     if (queryendday.length() < 2) {
                         queryendday = "0" + queryendday;
                     }
+                    if(i == 1) {
+                        String startmonthtmp = String.valueOf(monthdayofmonth);
+                        countqr.add(loginLogUserRepository.getloginCountMonthly("QR_CODE", year + "-" + startmonthtmp + "-" + querystartday, year + "-" + querymonth + "-" + queryendday + "T16:59:59"));
+                        countuser.add(loginLogUserRepository.getloginCountMonthly("CREDENTIAL", year + "-" + startmonthtmp + "-" + querystartday, year + "-" + querymonth + "-" + queryendday + "T16:59:59"));
+                        countfailed.add(loginLogUserRepository.getfailedCountMonthly(year + "-" + startmonthtmp + "-" + querystartday, year + "-" + querymonth + "-" + queryendday + "T16:59:59"));
+                    } else {
                         countqr.add(loginLogUserRepository.getloginCountMonthly("QR_CODE", year + "-" + querymonth + "-" + querystartday, year + "-" + querymonth + "-" + queryendday + "T16:59:59"));
                         countuser.add(loginLogUserRepository.getloginCountMonthly("CREDENTIAL", year + "-" + querymonth + "-" + querystartday, year + "-" + querymonth + "-" + queryendday + "T16:59:59"));
                         countfailed.add(loginLogUserRepository.getfailedCountMonthly(year + "-" + querymonth + "-" + querystartday, year + "-" + querymonth + "-" + queryendday + "T16:59:59"));
+                    }
+
                 }
                 monthdayofmonth += 1;
                 if(monthdayofmonth>=12) {
